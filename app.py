@@ -1,5 +1,6 @@
 from players.playerTypes import Team
 from players.player import get_team_player, get_player_stats
+from gameStats.gameStats import calculate_points_x_area
 
 API_URL_BASE = 'api.laligafantasymarca.com/api/v3'
 
@@ -32,4 +33,10 @@ playerListStats = []
 for lfmTeam in TEAMS:
     playerList = get_team_player(API_URL_BASE, lfmTeam)
     for player in playerList:
-        playerListStats.append(get_player_stats(API_URL_BASE, player))
+        player_stats = get_player_stats(API_URL_BASE, player)
+        playerListStats.append(player_stats)
+        print(calculate_points_x_area(player_stats, 'minutesPlayed'))
+        print(calculate_points_x_area(player_stats, 'saves'))
+        print(calculate_points_x_area(player_stats, 'effectiveClearances'))
+        print(calculate_points_x_area(player_stats, 'totalScoringAttempts'))
+        print(calculate_points_x_area(player_stats, 'ballRecovery'))

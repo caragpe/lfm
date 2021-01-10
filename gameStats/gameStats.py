@@ -19,6 +19,8 @@ from gameStats.gameStatsType import MinutesPlayed, \
     PossessionLost, \
     PlayerGameStats
 
+from typing import List
+
 
 def get_minutes_played(game_stats: dict) -> MinutesPlayed:
     return MinutesPlayed(
@@ -187,3 +189,21 @@ def get_game_stats(current_game: dict) -> PlayerGameStats:
         possessionLost=get_possession_lost(game_stats),
         marcaPoints=game_stats['marca_points'][1]
     )
+
+
+def calculate_points_x_area(stats: List[PlayerGameStats], area: str) -> dict:
+    number_of_games = 0
+    total_points = 0
+    area_points = 0
+    for stat in stats:
+        number_of_games += 1 if stat['minutesPlayed']['minutes'] > 0 else 0
+        total_points += stat['totalPoints']
+        area_points += stat[area]['points']
+    ratio = area_points/total_points if total_points > 0 else 0
+    ratio_x_game = area_points/number_of_games if number_of_games > 0 else 0
+    return {
+        'area': area,
+        'games': number_of_games,
+        'ratio': ratio,
+        'ratio_x_game': ratio_x_game
+    }

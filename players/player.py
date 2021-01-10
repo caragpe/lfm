@@ -39,7 +39,7 @@ def get_player_stats(api: str, player: Player):
         player_stats = json.loads(response.content.decode('utf-8'))['playerStats']
         for stats in player_stats:
             full_player_stats.append(get_game_stats(stats))
-        print(json.dumps(full_player_stats, indent=4, sort_keys=False))
+        # print(json.dumps(full_player_stats, indent=4, sort_keys=False))
         return full_player_stats
     else:
         return None
